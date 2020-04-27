@@ -1,5 +1,5 @@
 package finalproject;
 
-public class Marker {
+public interface Action {
 
 }

@@ -26,7 +26,7 @@ public class MapView {
 	double left = -74.1525;
 	double right = -74.1512;
 	
-	CustomPolygon baseballField = new CustomPolygon(
+	PolygonObject baseballField = new PolygonObject(
 			Map.of("x",new int[] {
 					(int)scaleWidth(left),
 					(int)scaleWidth(right),
@@ -50,7 +50,7 @@ public class MapView {
 	double lng3 = -74.1475;
 	double lng4 = -74.1479;
 	
-	CustomPolygon Building5N = new CustomPolygon(
+	PolygonObject Building5N = new PolygonObject(
 			Map.of(
 				"x", new int[] {
 					(int)scaleWidth(lng1),
@@ -74,9 +74,9 @@ public class MapView {
 				}
 			));
 
-	private CustomPolygon[] polygons = {baseballField, Building5N};
-	private Marker[] markers;
-	private CustomPoint[] points;
+	private PolygonObject[] polygons = {baseballField, Building5N};
+	private MarkerObject[] markers;
+	private PointObject[] points;
 	
 	private double scaleWidth(double x) {
 		return (0*(1-((x-minLat)/(maxLat-minLat))) + (MAP_WIDTH*((x-minLat)/(maxLat-minLat)))) + HORIZONTAL_OFFSET;
@@ -98,7 +98,7 @@ public class MapView {
 	
 	public void render(Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
-		for(CustomPolygon polygon : polygons) {
+		for(PolygonObject polygon : polygons) {
 			polygon.render(g);
 		}
 		
