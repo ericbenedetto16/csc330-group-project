@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.awt.FontMetrics;
 import java.util.*;
 
-public class MapDisplay {
+public class MapView {
+	protected static final int MAP_WIDTH = 550;
+	protected static final int MAP_HEIGHT = 710;
+	private static final int HORIZONTAL_OFFSET = (Program.WIDTH - MAP_WIDTH)/2;
+	private static final int VERTICAL_OFFSET = (Program.HEIGHT - MAP_HEIGHT)/2;
+	
 	private static final double minLat = -74.15552;
 	private static final double maxLat = -74.14424;
 	private static final double maxLng = 40.59493;
@@ -72,16 +77,16 @@ public class MapDisplay {
 	private CustomPolygon[] polygons = {baseballField, Building5N};
 	private Marker[] markers;
 	private CustomPoint[] points;
-
+	
 	private double scaleWidth(double x) {
-		return (0*(1-((x-minLat)/(maxLat-minLat))) + (Program.WIDTH*((x-minLat)/(maxLat-minLat))));
+		return (0*(1-((x-minLat)/(maxLat-minLat))) + (MAP_WIDTH*((x-minLat)/(maxLat-minLat)))) + HORIZONTAL_OFFSET;
 	}
 	
 	private double scaleHeight(double y) {
-		return (0*(1-((y-minLng)/(maxLng-minLng))) + (Program.HEIGHT*((y-minLng)/(maxLng-minLng))));
+		return (0*(1-((y-minLng)/(maxLng-minLng))) + (MAP_HEIGHT*((y-minLng)/(maxLng-minLng)))) + VERTICAL_OFFSET;
 	}
 	
-	public MapDisplay(Processor processor) {
+	public MapView() {
 		/*
 		 *  Displays the polygons which are passed in as
 		 *  data to the processor and the renderer.

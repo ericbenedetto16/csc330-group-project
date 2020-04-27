@@ -4,29 +4,22 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.IOException;
-import java.util.Random;
 
 public class Program extends Canvas implements Runnable {
 	private static final long serialVersionUID = 7485421146162456528L;
-	public static final int WIDTH = 550, HEIGHT = 710;
+	protected static final int WIDTH = 1200, HEIGHT = 710;
 	private Thread thread;
 	private boolean running = false;
 	public static boolean paused = false;
-	private MapDisplay map;
-	private Renderer renderer;
-	private Processor processor;
-	private Handler handler;
-	private Controller controller;
-	
+	private MapView map;
+	private ToolView tools;
+	private SideBarView sidebar;
+
 	public Program() {
-		new Window(WIDTH, HEIGHT, "CSC330 Final Project", this);
-		renderer = new Renderer();
-		processor = new Processor();
-		handler = new Handler();
-		controller = new Controller();
-		
-		map = new MapDisplay(processor);
+		new Window(WIDTH, HEIGHT, "CSC330 Final Project", this);	
+		map = new MapView();
+		sidebar = new SideBarView();
+		tools = new ToolView();
 	}
 
 	public synchronized void start() {
@@ -90,6 +83,8 @@ public class Program extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		map.render(g);
+		sidebar.render(g);
+		tools.render(g);
 		
 		bs.show();
 	}
