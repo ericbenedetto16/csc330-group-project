@@ -1,37 +1,54 @@
 package finalproject;
 
-import java.awt.Canvas;
-import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 
-public class Window extends Canvas {
+public class Window extends JFrame {
 
 	private static final long serialVersionUID = -4219692561193881812L;
-	JFrame frame;
+	private  SpringLayout layout;
+	private JPanel sidePanel;
+	private JPanel mapPanel;
+	private Container contentPane;
+	private WindowListener windowListener;
+	private Dimension dim;
 	
-	public Window(int width, int height, String title, Program program) {
-		Dimension d = new Dimension(width, height);
+	public Window(int width, int height) {
+		dim = new Dimension(width, height);
+		layout = new SpringLayout();
+		contentPane = getContentPane();
+		contentPane.setLayout(layout);
 		
-		JFrame frame = new JFrame(title);
-		this.frame = frame;
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setPreferredSize(d);
-		this.frame.setMinimumSize(d);
-		this.frame.setMaximumSize(d);
-		this.frame.setResizable(false);
-		this.frame.setLocationRelativeTo(null);
-		this.frame.setVisible(true);
-
-		this.frame.add(program);
-		this.frame.pack();
+		InteractiveMapController listener = new InteractiveMapController();
+		windowListener = listener;
 		
-		program.start();
+		sidePanel = new SideBarView(listener, layout, contentPane);
+		mapPanel = new InteractiveMapView(listener, layout, contentPane);
+		
+		layout.putConstraint(SpringLayout.EAST, mapPanel, -5, SpringLayout.WEST, sidePanel);
+		
+		listener.addView((SideBarView)sidePanel);
+		listener.addView((InteractiveMapView)mapPanel);
+		listener.refresh();
+		addWindowListener(windowListener);
+		
+		contentPane.add(sidePanel);
+		contentPane.add(mapPanel);
 
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setPreferredSize(dim);
+		// Add to Center Window on Open
+		setMinimumSize(new Dimension(width, height));
+		setMaximumSize(new Dimension(width, height));
+		
+		setResizable(false);
+		setLocationRelativeTo(null);
+
+		pack();
+		setVisible(true);	
 	}
 }

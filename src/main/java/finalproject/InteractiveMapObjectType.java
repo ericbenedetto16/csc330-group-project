@@ -1,5 +1,5 @@
 package finalproject;
 
-public enum MapObjectType {
+public enum InteractiveMapObjectType {
 	LINE, POINT, POLYGON;
 }
