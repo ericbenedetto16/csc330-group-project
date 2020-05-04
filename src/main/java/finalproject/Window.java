@@ -41,7 +41,6 @@ public class Window extends JFrame {
 
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setPreferredSize(dim);
-		// Add to Center Window on Open
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
 		
