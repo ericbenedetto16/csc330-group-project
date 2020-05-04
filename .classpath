@@ -17,5 +17,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/School/Desktop/GeographicLib-Java-1.50.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

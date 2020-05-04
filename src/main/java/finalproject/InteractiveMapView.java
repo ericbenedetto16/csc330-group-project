@@ -34,13 +34,20 @@ public class InteractiveMapView extends JPanel {
 	}
 	
 	public void refresh(ArrayList<InteractiveMapObject> l) {
+		setLayout(null);
 		removeAll();
 		shapes.clear();
+		shapes.addAll(l);
 		
-		for(InteractiveMapObject obj : l) {
-			shapes.add(obj);
+		for(InteractiveMapObject obj : shapes) {
 			add((Component) obj);
 			((Component) obj).addMouseListener(mouseListener);
+		}
+		
+		int counter = shapes.size() - 1;
+		for(InteractiveMapObject obj : shapes) {
+			setComponentZOrder((Component)obj, counter);
+			counter--;
 		}
 		
 		revalidate();

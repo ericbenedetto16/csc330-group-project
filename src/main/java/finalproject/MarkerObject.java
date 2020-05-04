@@ -30,6 +30,7 @@ public class MarkerObject extends JComponent implements InteractiveMapObject {
 		setVisible(true);
 	}
 
+	@Override
 	public void customPaint(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.red);

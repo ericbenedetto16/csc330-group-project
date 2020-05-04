@@ -1,6 +1,7 @@
 package finalproject;
 
 import java.awt.Cursor;
+import net.sf.geographiclib.*;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
@@ -8,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import finalproject.InteractiveMap.STATE;
+import finalproject.State;
 
 public class InteractiveMapController implements ActionListener, MouseListener, WindowListener {
 	private InteractiveMap map;
@@ -47,13 +47,13 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	}
 	
 	protected void refresh() {
-		if(!map.getState().equals(STATE.Marker)) {
+		if(!map.getState().equals(State.Marker)) {
 			for(MarkerObject point : points) {
 				map.removeShape(point);
 			}
 		}
 		
-		map.setState(STATE.None);
+		map.setState(State.None);
 		numPoints = 0;
 		maxPoints = 0;
 		points.clear();
@@ -62,7 +62,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 
 	private void sideBarAction(JButton button) {
 		String name = button.getText();
-		STATE tool = map.getState(name);
+		State tool = map.getState(name);
 	
 		if(name.equals(SideBarView.BL_EXIT)) { showClosingConfirmation(); return; }
 		
@@ -82,7 +82,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	}
 
 	private void handleInput(Point p) {
-		if(map.getState().equals(STATE.None)) { return; }
+		if(map.getState().equals(State.None)) { return; }
 		
 		MarkerObject marker = new MarkerObject(p.x,p.y);
 		if(numPoints + 1 == maxPoints) {
@@ -107,32 +107,39 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	
 	private void mapAction(MarkerObject obj) {
 		System.out.println("You placed the point at: " + obj.getLocation());
-		if(map.getState().equals(STATE.Marker) && numPoints == maxPoints) {
+		System.out.println("Point at " + map.convertToLng(obj.getX()) + ", " + map.convertToLat(obj.getY()));
+		if(map.getState().equals(State.Marker) && numPoints == maxPoints) {
 			MarkerObject p = points.get(0);
-			MarkerObject o = new MarkerObject(p, label);
+			
+			double lat = map.convertToLat(p.getY()), lng = map.convertToLng(p.getY());
+			
+			MarkerObject o = new MarkerObject(p, map.buildToolTipText(label, lat, lng));
 			
 			map.removeShape(p);
-			
 			map.addShape(o);
 			mapView.refresh(map.getShapes());
 			return;	
 		}
 		
-		if(map.getState().equals(STATE.Distance) && numPoints == maxPoints) {
+		if(map.getState().equals(State.Distance) && numPoints == maxPoints) {
 			MarkerObject p1 = points.get(0);
 			MarkerObject p2 = points.get(1);
 			
-			LineObject l = new LineObject(points.get(0), points.get(1), label);
+			double miles = map.haversine(p1, p2);
+			double feet = map.toFeet(miles);
+			
+			double centerLat = map.calcCenter(p1,p2)[0], centerLng = map.calcCenter(p1,p2)[1];
+
+			LineObject l = new LineObject(points.get(0), points.get(1), map.buildToolTipText(label, centerLat, centerLng, miles, feet));
 			
 			map.removeShape(p1);
 			map.removeShape(p2);
-			
 			map.addShape(l);
 			mapView.refresh(map.getShapes());
 			return;
 		}
 		
-		if(map.getState().equals(STATE.Polygon) && numPoints == maxPoints) {
+		if(map.getState().equals(State.Polygon) && numPoints == maxPoints) {
 			int[] x = new int[points.size()];
 			int[] y = new int[points.size()];
 
@@ -140,8 +147,27 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 				x[i] = points.get(i).getX();
 				y[i] = points.get(i).getY();
 			}
+			
+			Polygon poly = new Polygon(x,y, points.size());
+			Rectangle bounds = poly.getBounds();
+				
+			PolygonArea pa = new PolygonArea(Geodesic.WGS84, false);
 
-			PolygonObject p = new PolygonObject(new Polygon(x,y, points.size()), label);
+	        for(int i = 0; i < poly.npoints; i++) {
+	        	double lat = map.convertToLat(poly.ypoints[i]), lng = map.convertToLng(poly.xpoints[i]);
+	        	pa.AddPoint(lat,lng);
+	        }
+	        
+	        PolygonResult r = pa.Compute();
+	        
+	        System.out.println("Area (Sq. Feet): " + r.area * 10.764);
+	        System.out.println("Area (Sq. Miles): " + r.area / 2590000 );
+			
+			double centerLat = map.convertToLat(bounds.getCenterY());
+			double centerLng = map.convertToLng(bounds.getCenterX());
+			double sqfeet = map.toSqFeet(r.area);
+		
+			PolygonObject p = new PolygonObject(poly, map.buildToolTipText(label, centerLat, centerLng, sqfeet));
 			map.addShape(p);
 			
 			mapView.refresh(map.getShapes());
@@ -149,7 +175,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			return;
 		}
 		
-		if(map.getState().equals(STATE.Rectangle) && numPoints == maxPoints) {
+		if(map.getState().equals(State.Rectangle) && numPoints == maxPoints) {
 			MarkerObject p1 = points.get(0);
 			MarkerObject p2 = points.get(1);
 			
@@ -169,7 +195,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 		}
 		
 		
-		if(map.getState().equals(STATE.Triangle) && numPoints == maxPoints) {
+		if(map.getState().equals(State.Triangle) && numPoints == maxPoints) {
 			int[] x = new int[points.size()];
 			int[] y = new int[points.size()];
 			
@@ -183,7 +209,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 
 		}
 		
-		if(map.getState().equals(STATE.Circle) && numPoints == maxPoints) {
+		if(map.getState().equals(State.Circle) && numPoints == maxPoints) {
 			MarkerObject p1 = points.get(0);
 			MarkerObject p2 = points.get(1);
 			
@@ -198,7 +224,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			mapView.refresh(map.getShapes());
 	}
 	
-	private void setParameters(STATE state, String btn) {
+	private void setParameters(State state, String btn) {
 		activeButton = btn;
 		switch(state) {
 		case Marker:
@@ -278,7 +304,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 		
 				InteractiveMapObject m = (InteractiveMapObject)e.getSource();
 				
-				if(!map.getState().equals(STATE.None)) {
+				if(!map.getState().equals(State.None)) {
 					points.remove(m);
 					numPoints--;
 				}
@@ -302,7 +328,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 		}
 		
 		if(source.equals(MarkerObject.class)) {
-			if(map.getState().equals(STATE.Polygon)) {
+			if(map.getState().equals(State.Polygon)) {
 				if(points.size() < 3) { return; }
 	
 				MarkerObject m = (MarkerObject)e.getSource();
@@ -320,7 +346,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 					map.addShape(p);
 					mapView.refresh(map.getShapes());
 					
-					map.setState(STATE.None);
+					map.setState(State.None);
 					mapView.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					refresh();
 					sideView.enableButtons(SideBarView.BL_POLYGON);

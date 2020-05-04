@@ -26,6 +26,7 @@ public class LineObject extends JComponent implements InteractiveMapObject{
 		setBounds(bounds);
 	}
 	
+	@Override
 	public void customPaint(Graphics g) {
 		super.paintComponent(g);
 		
