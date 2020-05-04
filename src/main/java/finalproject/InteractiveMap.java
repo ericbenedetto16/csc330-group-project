@@ -2,8 +2,12 @@ package finalproject;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.json.simple.parser.ParseException;
 
 import net.sf.geographiclib.Geodesic;
 import net.sf.geographiclib.PolygonArea;
@@ -20,14 +24,37 @@ public class InteractiveMap {
 	public static final double maxLat = 40.59493;
 	public static final double minLat = 40.60826;
 	
+	private JSONReader r;
 	private ArrayList<InteractiveMapObject> baseShapes = new ArrayList<InteractiveMapObject>();
 	private ArrayList<InteractiveMapObject> userShapes = new ArrayList<InteractiveMapObject>();
 	
-	public InteractiveMap() {
-//		double top = 40.6030;
-//		double bottom = 40.6019;
-//		double left = -74.1525;
-//		double right = -74.1512;
+	public InteractiveMap() throws FileNotFoundException, IOException, ParseException {
+		
+		try {
+			r = new JSONReader("CSIBuildings.geojson");
+		
+			ArrayList<ArrayList<double[]>> rawShapes = r.getShapes();
+			ArrayList<InteractiveMapObject> raw = new ArrayList<InteractiveMapObject>();
+			for(ArrayList<double[]> shape : rawShapes) {
+				// Get Points in Shape
+				int n = shape.size();
+				// Create Array for Points
+				int[] x = new int[shape.size()];
+				int[] y = new int[shape.size()];
+				
+				// For Each Point in Shape
+				for(int i = 0; i < n; i++) {
+					// Add X,Y to Shape
+					x[i] = (int)scaleWidth(shape.get(i)[0]);
+					y[i] = (int)scaleHeight(shape.get(i)[1]);
+				}
+				
+				PolygonObject o = new PolygonObject(new Polygon(x,y,n),"Random");
+				baseShapes.add(o);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		double top = 40.6030;
 		double bottom = 40.6019;
@@ -87,8 +114,10 @@ public class InteractiveMap {
 				buildToolTipText("5N", calcCenter(lat1,lat3), calcCenter(lng1,lng4))
 				);
 		
-		baseShapes.add(baseballField);
-		baseShapes.add(Building5N);
+		
+		
+//		baseShapes.add(baseballField);
+//		baseShapes.add(Building5N);
 	}
 	
 	public double calcArea(Polygon o) {
@@ -105,7 +134,7 @@ public class InteractiveMap {
         System.out.println("Area (Sq. Miles): " + r.area / 2590000 );
 		
 		
-		return toSqFeetMeters(Math.abs(r.area));
+		return Math.abs(r.area);
 	}
 	
 	public ArrayList<int[]> initPolygon(ArrayList<MarkerObject> points) {
@@ -149,18 +178,29 @@ public class InteractiveMap {
 		
 		// Multiply W X H
 		double sqMiles = haverW * haverH;
-		return toSqFeetMiles(sqMiles);
+		return toSqMetersMiles(sqMiles);
 	}
 	
-	public double calcArea(CircleObject o) {
+	public double toSqMetersMiles(double miles) {
+		return miles * 2590000;
+	}
+	
+	public double toSqMilesMeters(double meters) {
+		return meters / 2590000;
+	}
+	
+	// CircleObject is Ellipse
+	public double calcArea(EllipseObject o) {
 		Rectangle bounds = o.getBounds();
-		double lng1 = bounds.getMinX();
-		double lng2 = bounds.getCenterX();
-		double latH = bounds.getCenterY();
+		double lngCenter = bounds.getCenterX();
+		double lngMax = bounds.getMaxX();
+		double latCenter = bounds.getCenterY();
+		double latMax = bounds.getMaxY();
 
-		double r = haversine(convertToLat(latH), convertToLng(lng1), convertToLat(latH), convertToLng(lng2));
-		double area = Math.PI *(r*r);
-		return toSqFeetMiles(area);
+		double a = haversine(convertToLat(latCenter), convertToLng(lngCenter), convertToLat(latCenter), convertToLng(lngMax));
+		double b = haversine(convertToLat(latCenter), convertToLng(lngCenter), convertToLat(latMax), convertToLng(lngCenter));
+		double area = Math.PI * a * b;
+		return toSqMetersMiles(area);
 	}
 	
 	public double[] getCenter(MarkerObject o) {
@@ -217,8 +257,8 @@ public class InteractiveMap {
 	public String buildToolTipText(String name, double lat, double lng, double area) {
 		return "<html>"
 				+ "<p><strong>Name:</strong> " + name + "</p>"
-				+ "<p><strong>Area (Sq. Feet):</strong> " + String.format("%.3f", area) + "</p>"
-				+ "<p><strong>Area (Sq. Miles):</strong> " + String.format("%.5f", toSqMilesFeet(area)) + "</p>"
+				+ "<p><strong>Area (Sq. Meters):</strong> " + String.format("%.3f", area) + "</p>"
+				+ "<p><strong>Area (Sq. Miles):</strong> " + String.format("%.5f", toSqMilesMeters(area)) + "</p>"
 				+ "<p><strong>Center:</strong> " + String.format("%.4f", lat) + ", " + String.format("%.4f", lng) + "</p>"
 				+ "</html>";
 	}
@@ -271,7 +311,7 @@ public class InteractiveMap {
 	
 	// Returns Distance in Miles between 2 Points
 	public double haversine(double y1, double x1, double y2, double x2) {
-		int earth_radius = 3961;
+		double earth_radius = 3958.756;
 		double dLat = Math.toRadians(y2 - y1);
 		double dLng = Math.toRadians(x2 - x1);
 		
@@ -313,7 +353,7 @@ public class InteractiveMap {
 			return State.Distance;
 		case SideBarView.BL_POLYGON:
 			return State.Polygon;
-		case SideBarView.BL_CIRCLE:
+		case SideBarView.BL_Ellipse:
 			return State.Circle;
 		case SideBarView.BL_RECTANGLE:
 			return State.Rectangle;

@@ -1,7 +1,6 @@
 package finalproject;
 
 import java.awt.Cursor;
-import net.sf.geographiclib.*;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
@@ -11,8 +10,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import org.json.simple.parser.ParseException;
 
 import finalproject.State;
 
@@ -35,7 +36,12 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	private ArrayList<MarkerObject> points;
 	
 	public InteractiveMapController() {
-		map = new InteractiveMap();
+		try {
+			map = new InteractiveMap();
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		points = new ArrayList<MarkerObject>();
 	}
 	
@@ -170,7 +176,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			
 			double miles = map.haversine(p1, p2);
 			double feet = map.toFeet(miles);
-			
+
 			double[] center = map.getCenter(p1, p2);
 
 			LineObject l = new LineObject(p1, p2, map.buildToolTipText(label, center[0], center[1], miles, feet));
@@ -199,9 +205,9 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			Polygon poly = new Polygon(x,y, points.size());
 			
 			double[] center = map.getCenter(poly);
-			double sqFeet = map.calcArea(poly);
+			double area = map.calcArea(poly);
 			
-			PolygonObject p = new PolygonObject(poly, map.buildToolTipText(label, center[0], center[1], sqFeet));
+			PolygonObject p = new PolygonObject(poly, map.buildToolTipText(label, center[0], center[1], area));
 			
 			pushShape(p);
 		}
@@ -210,9 +216,9 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			MarkerObject p1 = points.get(0), p2 = points.get(1);
 
 			double[] center = map.getCenter(p1,p2);
-			double area = map.calcArea(new CircleObject(p1,p2,null));
+			double area = map.calcArea(new EllipseObject(p1,p2,null));
 			
-			CircleObject c = new CircleObject(p1,p2,map.buildToolTipText(label, center[0], center[1], area));
+			EllipseObject c = new EllipseObject(p1,p2,map.buildToolTipText(label, center[0], center[1], area));
 			
 			pushShape(c);
 		}

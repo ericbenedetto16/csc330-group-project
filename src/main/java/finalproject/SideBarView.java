@@ -18,7 +18,7 @@ public class SideBarView extends JPanel {
 	public static final String BL_POLYGON = "Polygon";
 	public static final String BL_RECTANGLE = "Rectangle";
 	public static final String BL_TRIANGLE = "Triangle";
-	public static final String BL_CIRCLE = "Circle";
+	public static final String BL_Ellipse = "Ellipse";
 	public static final String BL_CLEAR = "Clear";
 	public static final String BL_EXIT = "Exit";
 	
@@ -40,7 +40,7 @@ public class SideBarView extends JPanel {
 		buttons.add(new JButton(BL_POLYGON));
 		buttons.add(new JButton(BL_RECTANGLE));
 		buttons.add(new JButton(BL_TRIANGLE));
-		buttons.add(new JButton(BL_CIRCLE));
+		buttons.add(new JButton(BL_Ellipse));
 		buttons.add(new JButton(BL_CLEAR));
 		buttons.add(new JButton(BL_EXIT));
 		
