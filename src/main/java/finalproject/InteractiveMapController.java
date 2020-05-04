@@ -165,7 +165,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			
 			double centerLat = map.convertToLat(bounds.getCenterY());
 			double centerLng = map.convertToLng(bounds.getCenterX());
-			double sqfeet = map.toSqFeet(r.area);
+			double sqfeet = map.toSqFeetMeters(r.area);
 		
 			PolygonObject p = new PolygonObject(poly, map.buildToolTipText(label, centerLat, centerLng, sqfeet));
 			map.addShape(p);
@@ -185,8 +185,25 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			int w = Math.abs(p1.getX() - p2.getX());
 			int h = Math.abs(p1.getY() - p2.getY());
 			
+			
+	
 			Rectangle r = new Rectangle(x,y,w,h);
-			RectangleObject o = new RectangleObject(r, label);
+			
+			// Get Haversine Distance Between
+			// TL TR (MinX, MaxY) (MaxX, MaxY)
+			double tlLat = map.convertToLat(r.getMaxY()), tlLng = map.convertToLng(r.getMinX());
+			double trLat = map.convertToLat(r.getMaxY()), trLng = map.convertToLng(r.getMaxX());
+			double haverW = map.haversine(tlLat, tlLng, trLat, trLng);
+			
+			// TL BL (MinX, MaxY) (MinX, MinY)
+			double blLat = map.convertToLat(r.getMinY()), blLng = map.convertToLng(r.getMinX());
+			double haverH = map.haversine(tlLat, tlLng, blLat, blLng);
+			
+			// Multiply W X H
+			double sqMiles = haverW * haverH;
+			double sqFeet = map.toSqFeetMiles(sqMiles);
+			
+			RectangleObject o = new RectangleObject(r, map.buildToolTipText(label, r.getCenterY(), r.getCenterX(), sqFeet));
 			
 			map.addShape(o);
 			
@@ -204,8 +221,29 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 				y[i] = points.get(i).getY();
 			}
 			
-			PolygonObject t = new PolygonObject(new Polygon(x,y,points.size()),label);
-			map.addShape(t);
+			Polygon poly = new Polygon(x,y, points.size());
+			Rectangle bounds = poly.getBounds();
+				
+			PolygonArea pa = new PolygonArea(Geodesic.WGS84, false);
+
+	        for(int i = 0; i < poly.npoints; i++) {
+	        	double lat = map.convertToLat(poly.ypoints[i]), lng = map.convertToLng(poly.xpoints[i]);
+	        	pa.AddPoint(lat,lng);
+	        }
+	        
+	        PolygonResult r = pa.Compute();
+	        
+	        System.out.println("Area (Sq. Feet): " + r.area * 10.764);
+	        System.out.println("Area (Sq. Miles): " + r.area / 2590000 );
+			
+			double centerLat = map.convertToLat(bounds.getCenterY());
+			double centerLng = map.convertToLng(bounds.getCenterX());
+			double sqfeet = map.toSqFeetMeters(Math.abs(r.area));
+		
+			PolygonObject p = new PolygonObject(poly, map.buildToolTipText(label, centerLat, centerLng, sqfeet));
+			map.addShape(p);
+			
+			mapView.refresh(map.getShapes());
 
 		}
 		
@@ -213,7 +251,19 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			MarkerObject p1 = points.get(0);
 			MarkerObject p2 = points.get(1);
 			
-			CircleObject c = new CircleObject(p1,p2,label);
+			CircleObject h = new CircleObject(p1,p2,label);
+			Rectangle bounds = h.getBounds();
+			double lng1 = bounds.getMinX();
+			double lng2 = bounds.getCenterX();
+			double latH = bounds.getCenterY();
+
+			double lat = map.calcCenter(p1, p2)[0], lng = map.calcCenter(p1, p2)[1];
+		
+			double r = map.haversine(map.convertToLat(latH), map.convertToLng(lng1), map.convertToLat(latH), map.convertToLng(lng2));
+			double area = Math.PI *(r*r);
+			double sqFeet = map.toSqFeetMiles(area);
+			
+			CircleObject c = new CircleObject(p1,p2,map.buildToolTipText(label, lat, lng, sqFeet));
 			
 			map.addShape(c);
 			mapView.refresh(map.getShapes());

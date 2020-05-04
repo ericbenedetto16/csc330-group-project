@@ -106,11 +106,15 @@ public class InteractiveMap {
 		userShapes.clear();
 	}
 	
-	public double toSqFeet(double meters) {
+	public double toSqFeetMeters(double meters) {
 		return meters * 10.764;
 	}
 	
-	public double toSqMiles(double feet) {
+	public double toSqFeetMiles(double miles) {
+		return miles * 27880000;
+	}
+	
+	public double toSqMilesFeet(double feet) {
 		return feet / 2590000;
 	}
 	
@@ -132,7 +136,7 @@ public class InteractiveMap {
 		return "<html>"
 				+ "<p><strong>Name:</strong> " + name + "</p>"
 				+ "<p><strong>Area (Sq. Feet):</strong> " + String.format("%.3f", area) + "</p>"
-				+ "<p><strong>Area (Sq. Miles):</strong> " + String.format("%.5f", toSqMiles(area)) + "</p>"
+				+ "<p><strong>Area (Sq. Miles):</strong> " + String.format("%.5f", toSqMilesFeet(area)) + "</p>"
 				+ "<p><strong>Center:</strong> " + String.format("%.4f", lat) + ", " + String.format("%.4f", lng) + "</p>"
 				+ "</html>";
 	}
