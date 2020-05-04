@@ -1,3 +1,4 @@
 *.class
 *.txt
 *.log
+.classpath
