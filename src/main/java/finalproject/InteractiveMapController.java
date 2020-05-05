@@ -301,7 +301,7 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 			
 			InteractiveMapObject m = (InteractiveMapObject)e.getSource();
 			
-			if(!map.getState().equals(State.None)) removePoint(m);
+			if(!map.getState().equals(State.None) && e.getSource().getClass().equals(MarkerObject.class)) removePoint(m);
 			
 			popShape(m);
 		} else {
