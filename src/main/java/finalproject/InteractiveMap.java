@@ -21,17 +21,6 @@ public class InteractiveMap {
 	
 	public static final int MAP_WIDTH = 524;
 	public static final int MAP_HEIGHT = 661;
-//	public static final int MAP_WIDTH = 2 * ( Program.WINDOW_WIDTH /3) - 20, MAP_HEIGHT = Program.WINDOW_HEIGHT - (710 - 660);
-	
-//	public static final double minLng = -74.15552;
-//	public static final double maxLng = -74.14424;
-//	public static final double maxLat = 40.59493;
-//	public static final double minLat = 40.60826;
-	
-//	public static final double minLng = -74.15215;
-//	public static final double maxLng = -74.14715;
-//	public static final double maxLat = 40.59620;
-//	public static final double minLat = 40.60600;
 	
 	public static final double minLng = -74.15420;
 	public static final double maxLng = -74.14590;
@@ -47,134 +36,17 @@ public class InteractiveMap {
 		try {
 			JSONReader r = new JSONReader("CSI_Land.geojson");
 			
-			Map<String, ArrayList<double[]>> gShapes = r.getShapes();
-			
-			Iterator<Entry<String, ArrayList<double[]>>> itr1 = gShapes.entrySet().iterator();
-			while(itr1.hasNext()) {
-				Map.Entry<String, ArrayList<double[]>> pair = itr1.next();
-				String name = pair.getKey();
-				ArrayList<double[]> shape = pair.getValue();
-				
-				// Get Points in Shape
-				int n = shape.size();
-				// Create Array for Points
-				int[] x = new int[shape.size()];
-				int[] y = new int[shape.size()];
-				
-				// For Each Point in Shape
-				for(int i = 0; i < n; i++) {
-					// Add X,Y to Shape
-					x[i] = (int)scaleWidth(shape.get(i)[0]);
-					y[i] = (int)scaleHeight(shape.get(i)[1]);
-				}
-				
-				Polygon poly = new Polygon(x,y,n);
-				System.out.println(poly);
-				
-				double center[] = getCenter(poly);
-				
-				PolygonObject o = new PolygonObject(poly, true);
-				baseShapes.add(o);
-			}
+			roundUpShapes(r, true);
 			
 			r = new JSONReader("CSI_With_Lots_2.geojson");
 			
-			Map<String, ArrayList<double[]>> rawShapes = r.getShapes();
-			
-			Iterator<Entry<String, ArrayList<double[]>>> itr = rawShapes.entrySet().iterator();
-			while(itr.hasNext()) {
-				Map.Entry<String, ArrayList<double[]>> pair = itr.next();
-				String name = pair.getKey();
-				ArrayList<double[]> shape = pair.getValue();
-				
-				// Get Points in Shape
-				int n = shape.size();
-				// Create Array for Points
-				int[] x = new int[shape.size()];
-				int[] y = new int[shape.size()];
-				
-				// For Each Point in Shape
-				for(int i = 0; i < n; i++) {
-					// Add X,Y to Shape
-					x[i] = (int)scaleWidth(shape.get(i)[0]);
-					y[i] = (int)scaleHeight(shape.get(i)[1]);
-				}
-				
-				Polygon poly = new Polygon(x,y,n);
-				
-				double center[] = getCenter(poly);
-				
-				PolygonObject o = new PolygonObject(poly,buildToolTipText(name,center[0],center[1]), new double[] {scaleHeight(center[0]), scaleWidth(center[1])}, name);
-				baseShapes.add(o);
-			}
+			roundUpShapes(r, false);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		double top = 40.6030;
-		double bottom = 40.6019;
-		double left = -74.1525;
-		double right = -74.1512;
-		
-		// To get the coordinate do the percentage of how far
-		// it is between the smallest and biggest ranges and multiply
-		// that value by the width of the window
-		PolygonObject baseballField = new PolygonObject(
-				new Polygon(new int[] {
-						(int)scaleWidth(left),
-						(int)scaleWidth(right),
-						(int)scaleWidth(right),
-						(int)scaleWidth(left)
-						}, 
-				new int[] {
-						(int)scaleHeight(top),
-						(int)scaleHeight(top),
-						(int)scaleHeight(bottom),
-						(int)scaleHeight(bottom)
-						},4),
-				buildToolTipText("Baseball Field", calcCenter(top,bottom), calcCenter(left, right))
-				);
-		
-		double lat1 = 40.6031;
-		double lat2 = 40.6027;
-		double lat3 = 40.6029;
-		
-		double lng1 = -74.1481;
-		double lng2 = -74.1473;
-		double lng3 = -74.1475;
-		double lng4 = -74.1479;
-		
-		PolygonObject Building5N = new PolygonObject(
-				new Polygon(new int[] {
-							(int)scaleWidth(lng1),
-							(int)scaleWidth(lng2),
-							(int)scaleWidth(lng2),
-							(int)scaleWidth(lng3),
-							(int)scaleWidth(lng3),
-							(int)scaleWidth(lng4),
-							(int)scaleWidth(lng4),
-							(int)scaleWidth(lng1)
-						},
-						new int[] {
-							(int)scaleHeight(lat1),
-							(int)scaleHeight(lat1),
-							(int)scaleHeight(lat2),
-							(int)scaleHeight(lat2),
-							(int)scaleHeight(lat3),
-							(int)scaleHeight(lat3),
-							(int)scaleHeight(lat2),
-							(int)scaleHeight(lat2)
-						},
-						8),
-				buildToolTipText("5N", calcCenter(lat1,lat3), calcCenter(lng1,lng4))
-				);
-		
-		
-		
-//		baseShapes.add(baseballField);
-//		baseShapes.add(Building5N);
 	}
 	
+
 	public double calcArea(Polygon o) {
 		PolygonArea pa = new PolygonArea(Geodesic.WGS84, false);
 
@@ -350,7 +222,6 @@ public class InteractiveMap {
 		double lng1 = convertToLat(p1.getY()), lng2 = convertToLat(p2.getY());
 		
 		return new double[] { calcCenter(lng1,lng2), calcCenter(lat1,lat2) };
-
 	}
 	
 	public double calcCenter(double first, double second) {
@@ -383,7 +254,6 @@ public class InteractiveMap {
 	
 	public ArrayList<InteractiveMapObject> getShapes() {
 		ArrayList<InteractiveMapObject> allShapes = new ArrayList<InteractiveMapObject>();
-		allShapes.addAll(grassShapes);
 		allShapes.addAll(baseShapes);
 		allShapes.addAll(userShapes);
 		return allShapes;
@@ -426,5 +296,40 @@ public class InteractiveMap {
 
 	public boolean toolActive(State s) {
 		return this.state.equals(s);
+	}
+	
+	private void roundUpShapes(JSONReader r, boolean grass) {
+		Map<String, ArrayList<double[]>> rawShapes = r.getShapes();
+		
+		Iterator<Entry<String, ArrayList<double[]>>> itr = rawShapes.entrySet().iterator();
+		while(itr.hasNext()) {
+			Map.Entry<String, ArrayList<double[]>> pair = itr.next();
+			String name = pair.getKey();
+			ArrayList<double[]> shape = pair.getValue();
+			
+			// Get Points in Shape
+			int n = shape.size();
+			// Create Array for Points
+			int[] x = new int[shape.size()];
+			int[] y = new int[shape.size()];
+			
+			// For Each Point in Shape
+			for(int i = 0; i < n; i++) {
+				// Add X,Y to Shape
+				x[i] = (int)scaleWidth(shape.get(i)[0]);
+				y[i] = (int)scaleHeight(shape.get(i)[1]);
+			}
+			
+			Polygon poly = new Polygon(x,y,n);
+			
+			PolygonObject o;
+			if(grass) {
+				o = new PolygonObject(poly, true);
+			}else {
+				double center[] = getCenter(poly);	
+				o = new PolygonObject(poly,buildToolTipText(name,center[0],center[1]), new double[] {scaleHeight(center[0]), scaleWidth(center[1])}, name);
+			}
+			baseShapes.add(o);	
+		}
 	}
 }

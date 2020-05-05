@@ -21,8 +21,6 @@ public class JSONReader
     private ArrayList<JSONObject> geometries;
     private Map<String, JSONObject> objects;
     private Map<String, JSONArray> coordinatesMap;
-    private ArrayList<JSONArray> coordinates;
-    private ArrayList<ArrayList<double[]>> shapes;
     private Map<String, ArrayList<double[]>> shapesMap;
     
 	public JSONReader(String file) throws FileNotFoundException, IOException, ParseException {
@@ -30,30 +28,17 @@ public class JSONReader
 		 Object obj = new JSONParser().parse(new FileReader(JSONReader.class.getClassLoader().getResource(file).getFile().replace("%20", " ")));
 	     
 		 jo = (JSONObject) obj; 
-		 System.out.println(obj);
 		 
 	     features = (JSONArray)((JSONArray)(jo.get("features")));
 	     geometries = new ArrayList<JSONObject>();
 		 objects = new HashMap<String,JSONObject>();
-	     coordinates = new ArrayList<JSONArray>();
 		 coordinatesMap = new HashMap<String,JSONArray>();
-	     shapes = new ArrayList<ArrayList<double[]>>();
 	     shapesMap = new HashMap<String,ArrayList<double[]>>();
 	     
-	     setGeometries(features);
-	     setCoordinates(geometries);
-	     setShapes(coordinates);
-	     
-	     System.out.println(shapes.size());
-	     System.out.println(shapesMap.size());
-
-	     for(ArrayList<double[]> shape : shapes) {
-//	    	 System.out.println("Shape");
-	    	 
-	    	 for(double[] coord : shape) {
-//	    		 System.out.println("[" + coord[0] + ", " + coord[1] + "]");
-	    	 }
-	     }
+	     setGeometries();
+	     setCoordinates();
+	     setShapes();
+	    
 	 }catch(FileNotFoundException e) { 
 		 System.out.println("File Could Not Be Found");
 	 }catch(IOException e) {
@@ -63,36 +48,20 @@ public class JSONReader
 	 }
 	}
 	
-	private void setGeometries(JSONArray features) {
+	private void setGeometries() {
 		int counter = 0;
 		for(Object f : features) {
-			System.out.println(counter);
 	    	 geometries.add((JSONObject)((JSONObject)f).get("geometry"));
 	    	 if(Objects.isNull((String)((JSONObject)((JSONObject)f).get("properties")).get("name"))) {
 	    		 objects.put(" " + counter,(JSONObject)((JSONObject)f).get("geometry")); 
 				}else {
 					objects.put((String)((JSONObject)((JSONObject)f).get("properties")).get("name"),(JSONObject)((JSONObject)f).get("geometry")); 
 				}
-	    	 
 	    	 counter++; 
 		}
-		
-//		for(Object f : features) {
-//			if(Objects.isNull((String)((JSONObject)((JSONObject)f).get("properties")).get("name"))) {
-//				objects.put("N/A",(JSONObject)((JSONObject)f).get("geometry")); 
-//			}else {
-//				objects.put((String)((JSONObject)((JSONObject)f).get("properties")).get("name"),(JSONObject)((JSONObject)f).get("geometry")); 
-//			}
-//		}
-		System.out.println(geometries.size());
-		System.out.println(objects.size());
 	}
 	
-	private void setCoordinates(ArrayList<JSONObject> geometries) {
-		for(JSONObject g : geometries) {
-	    	 coordinates.add((JSONArray)((JSONArray)((JSONArray)g.get("coordinates")).get(0)).get(0));
-	     }
-		
+	private void setCoordinates() {	
 		Iterator<Entry<String, JSONObject>> itr = objects.entrySet().iterator();
 		while(itr.hasNext()) {
 			Map.Entry<String, JSONObject> pair = itr.next();
@@ -102,17 +71,7 @@ public class JSONReader
 		}
 	} 
 	
-	private void setShapes(ArrayList<JSONArray> coordinates) {
-		for(JSONArray p : coordinates) {
-	    	 ArrayList<double[]> shape = new ArrayList<double[]>();
-	    	 for(Object a : p) {
-	    		 double x = (double) ((JSONArray)a).get(0), y = (double) ((JSONArray)a).get(1);
-	    		 double[] point = new double[] {x,y};
-	    		 shape.add((double[])point);
-	    	 }
-	    	 shapes.add(shape);
-	     }
-		
+	private void setShapes() {
 		Iterator<Entry<String, JSONArray>> itr = coordinatesMap.entrySet().iterator();
 		while(itr.hasNext()) {
 			Map.Entry<String, JSONArray> pair = itr.next();
@@ -128,10 +87,6 @@ public class JSONReader
 	    	 shapesMap.put(name,shape);
 		}
 	}
-	
-//	public ArrayList<ArrayList<double[]>> getShapes() {
-//		return shapes;
-//	}
 	
 	public Map<String,ArrayList<double[]>> getShapes() {
 		return shapesMap;
