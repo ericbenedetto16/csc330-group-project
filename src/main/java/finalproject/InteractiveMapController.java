@@ -326,8 +326,8 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		
-		if(source.getClass().equals(JButton.class)) {
-			JButton button = (JButton) source;
+		if(source.getClass().equals(SideButton.class)) {
+			SideButton button = (SideButton) source;
 
 			sideBarAction(button);
 		}
@@ -344,11 +344,11 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		Object source = e.getSource();
-		if(source.getClass().equals(JButton.class)) {
-			JButton c = (JButton)e.getComponent();
+		if(source.getClass().equals(SideButton.class)) {
+			SideButton c = (SideButton)e.getComponent();
 			if(c.isEnabled()) {
-
-			sideView.changeCursor(new Cursor(Cursor.HAND_CURSOR));
+				sideView.changeCursor(new Cursor(Cursor.HAND_CURSOR));
+				c.hover();
 			}
 		}
 	}
@@ -357,8 +357,12 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	public void mouseExited(MouseEvent e) {
 		Object source = e.getSource();
 		
-		if(source.getClass().equals(JButton.class)) {
+		if(source.getClass().equals(SideButton.class)) {
+			SideButton c = (SideButton)e.getComponent();
 			sideView.changeCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			if(c.isEnabled()) {
+				c.hoverDismiss();
+			}
 		}
 	}
 	

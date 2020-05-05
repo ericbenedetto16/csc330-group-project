@@ -24,13 +24,13 @@ public class SideBarView extends JPanel {
 	
 	private ActionListener actionListener;
 	private MouseListener mouseListener;
-	private ArrayList<JButton> buttons;
+	private ArrayList<SideButton> buttons;
 	private SpringLayout layout;
 	private Container contentPane;
 	
 	public SideBarView(InteractiveMapController listener, SpringLayout l, Container cp) {
 		super();
-		buttons = new ArrayList<JButton>();
+		buttons = new ArrayList<SideButton>();
 		actionListener = listener;
 		mouseListener = listener;
 		layout = l;
@@ -54,14 +54,14 @@ public class SideBarView extends JPanel {
 	}
 	
 	private void buttonsInit() {
-		buttons.add(new JButton(BL_MARKER));
-		buttons.add(new JButton(BL_DISTANCE));
-		buttons.add(new JButton(BL_POLYGON));
-		buttons.add(new JButton(BL_RECTANGLE));
-		buttons.add(new JButton(BL_TRIANGLE));
-		buttons.add(new JButton(BL_Ellipse));
-		buttons.add(new JButton(BL_CLEAR));
-		buttons.add(new JButton(BL_EXIT));
+		buttons.add(new SideButton(BL_MARKER));
+		buttons.add(new SideButton(BL_DISTANCE));
+		buttons.add(new SideButton(BL_POLYGON));
+		buttons.add(new SideButton(BL_RECTANGLE));
+		buttons.add(new SideButton(BL_TRIANGLE));
+		buttons.add(new SideButton(BL_Ellipse));
+		buttons.add(new SideButton(BL_CLEAR));
+		buttons.add(new SideButton(BL_EXIT));
 		
 		addListeners();
 	}
@@ -75,17 +75,19 @@ public class SideBarView extends JPanel {
 	}
 
 	public void disableButtons(String button) {
-		for(JButton btn : buttons) {
+		for(SideButton btn : buttons) {
 			if(!btn.getText().equals(button)) {
 				btn.setEnabled(false);
+				btn.disableAction();
 			}
 		}
 	}
 	
 	public void enableButtons(String button) {
-		for(JButton btn : buttons) {
+		for(SideButton btn : buttons) {
 			if(!btn.getText().equals(button)) {
 				btn.setEnabled(true);
+				btn.enableAction();
 			}
 		}
 	}
