@@ -219,6 +219,10 @@ public class InteractiveMap {
 		return (y * decPerPx) + minLat;
 	}
 	
+	public double[] getCenter(Rectangle o) {
+		return new double[] {convertToLat(o.getCenterY()), convertToLng(o.getCenterX())};
+	}
+	
 	public double[] getCenter(MarkerObject p1, MarkerObject p2) {
 		double lat1 = convertToLng(p1.getX()), lat2 = convertToLng(p2.getX());
 		double lng1 = convertToLat(p1.getY()), lng2 = convertToLat(p2.getY());

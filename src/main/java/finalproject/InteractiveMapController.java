@@ -192,8 +192,9 @@ public class InteractiveMapController implements ActionListener, MouseListener, 
 	
 			Rectangle r = map.initRectangle(p1, p2);
 			double area = map.calcArea(r);
+			double center[] = map.getCenter(r);
 			
-			RectangleObject o = new RectangleObject(r, map.buildToolTipText(label, r.getCenterY(), r.getCenterX(), area));
+			RectangleObject o = new RectangleObject(r, map.buildToolTipText(label, center[0], center[1], area));
 			
 			pushShape(o);
 		}

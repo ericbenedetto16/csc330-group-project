@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="finalproject.InteractiveMapView" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/InteractiveMapView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1291" y="891"/>    
+    <position height="-1" width="-1" x="1629" y="740"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="finalproject.JSONReader" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/JSONReader.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1661" y="1717"/>    
+    <position height="-1" width="-1" x="1267" y="419"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="finalproject.Program" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/Program.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1052" y="-339"/>    
+    <position height="-1" width="-1" x="1626" y="453"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="finalproject.LineObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/LineObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="292" y="843"/>    
+    <position height="-1" width="-1" x="2232" y="992"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="finalproject.PolygonObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/PolygonObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="32" y="887"/>    
+    <position height="-1" width="-1" x="1952" y="1038"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <interface id="6" language="java" name="finalproject.InteractiveMapObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/InteractiveMapObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="633" y="1191"/>    
+    <position height="-1" width="-1" x="2559" y="1256"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </interface>  
   <class id="7" language="java" name="finalproject.RectangleObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/RectangleObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="734" y="826"/>    
+    <position height="-1" width="-1" x="2732" y="979"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="finalproject.SideBarView" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/SideBarView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1974" y="644"/>    
+    <position height="-1" width="-1" x="1624" y="1118"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="finalproject.Window" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/Window.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="315" width="183" x="1168" y="-426"/>    
+    <position height="-1" width="-1" x="985" y="385"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -84,7 +84,7 @@
   </class>  
   <class id="10" language="java" name="finalproject.InteractiveMapController" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/InteractiveMapController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1254" y="296"/>    
+    <position height="-1" width="-1" x="984" y="1022"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -93,7 +93,7 @@
   </class>  
   <enumeration id="11" language="java" name="finalproject.State" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/State.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1902" y="1544"/>    
+    <position height="-1" width="-1" x="1552" y="1490"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   </enumeration>  
   <class id="12" language="java" name="finalproject.InteractiveMap" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/InteractiveMap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1646" y="1097"/>    
+    <position height="-1" width="-1" x="1272" y="1089"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -111,7 +111,7 @@
   </class>  
   <class id="13" language="java" name="finalproject.EllipseObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/EllipseObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="966" y="844"/>    
+    <position height="-1" width="-1" x="2988" y="997"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -120,114 +120,214 @@
   </class>  
   <class id="14" language="java" name="finalproject.MarkerObject" project="FinalProject" 
     file="/FinalProject/src/main/java/finalproject/MarkerObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="535" y="826"/>    
+    <position height="-1" width="-1" x="2503" y="981"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="15">    
+  <class id="15" language="java" name="finalproject.SideButton" project="FinalProject" 
+    file="/FinalProject/src/main/java/finalproject/SideButton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1888" y="1308"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="16">    
+    <bendpoint x="1462" y="1358"/>    
+    <bendpoint x="1778" y="1360"/>    
+    <bendpoint x="1810" y="1408"/>    
+    <bendpoint x="2172" y="1408"/>    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="16" name="r"/>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
+      <attribute id="17" name="userShapes"/>      
+      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="20" name="r">        
+        <position height="0" width="0" x="-394" y="-1298"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-394" y="-1298"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="18">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="19" name="listener"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="21">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="22" name="state"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <realization id="24">    
+  <realization id="22">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="6"/>  
   </realization>  
-  <association id="25">    
+  <association id="23">    
+    <bendpoint x="1122" y="574"/>    
+    <bendpoint x="1120" y="272"/>    
+    <bendpoint x="1406" y="272"/>    
+    <bendpoint x="1422" y="540"/>    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="26" name="map"/>      
-      <multiplicity id="27" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="28">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="29" name="mapView"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
+      <attribute id="24" name="mapView">        
+        <position height="0" width="0" x="338" y="-151"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="338" y="-151"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="31">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="32" name="p2"/>      
-      <multiplicity id="33" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="34">    
-    <bendpoint x="634" y="730"/>    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="35" name="points"/>      
-      <multiplicity id="36" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="37">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="38" name="p1"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <realization id="40">    
-    <end type="SOURCE" refId="4"/>    
+  <realization id="26">    
+    <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="6"/>  
   </realization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="28">    
+    <bendpoint x="1040" y="1576"/>    
+    <bendpoint x="1266" y="1578"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="29" name="map">        
+        <position height="0" width="0" x="-374" y="-8"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-374" y="-8"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="31">    
+    <bendpoint x="1452" y="1382"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="32" name="state">        
+        <position height="0" width="0" x="-350" y="-54"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-350" y="-54"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="34">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="35">    
+    <bendpoint x="1104" y="562"/>    
+    <bendpoint x="1106" y="254"/>    
+    <bendpoint x="1438" y="252"/>    
+    <bendpoint x="1438" y="348"/>    
+    <bendpoint x="1726" y="348"/>    
+    <bendpoint x="1726" y="586"/>    
+    <bendpoint x="1842" y="586"/>    
+    <bendpoint x="1848" y="830"/>    
+    <bendpoint x="2498" y="836"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="36" name="points">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="39" name="p1">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
   <association id="41">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="42" name="shapes"/>      
+    <bendpoint x="1480" y="1372"/>    
+    <bendpoint x="1766" y="1372"/>    
+    <bendpoint x="1802" y="1426"/>    
+    <bendpoint x="2178" y="1428"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="42" name="baseShapes"/>      
       <multiplicity id="43" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <realization id="44">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <realization id="45">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <realization id="46">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <association id="47">    
+  <association id="44">    
+    <bendpoint x="988" y="1596"/>    
+    <bendpoint x="1628" y="1598"/>    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="48" name="sideView"/>      
-      <multiplicity id="49" minimum="0" maximum="1"/>    
+      <attribute id="45" name="sideView">        
+        <position height="0" width="0" x="-350" y="474"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-350" y="474"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
+  <association id="47">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="48" name="p2">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1968" y="155"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="50">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="51" name="buttons"/>      
+      <multiplicity id="52" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="53">    
+    <bendpoint x="1810" y="890"/>    
+    <bendpoint x="1814" y="1200"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="54" name="shapes">        
+        <position height="0" width="0" x="1926" y="65"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="1926" y="65"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="57" name="listener">        
+        <position height="0" width="0" x="-270" y="726"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-270" y="726"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="59">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
