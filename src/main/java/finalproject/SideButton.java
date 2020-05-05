@@ -22,7 +22,6 @@ public class SideButton extends JButton {
 	}
 	
 	public void disableAction() {
-		System.out.println("ok");
 		setBackground(Color.LIGHT_GRAY);
 	}
 	
