@@ -17,44 +17,60 @@ public class Window extends JFrame {
 	private JPanel sidePanel;
 	private JPanel mapPanel;
 	private Container contentPane;
-	private WindowListener windowListener;
+	private InteractiveMapController listener;
 	private Dimension dim;
 	private ImageIcon icon;
+	private String title;
 	
-	public Window(int width, int height, String iconPath) {
+	public Window(int width, int height, String t, String iconPath) {
 		dim = new Dimension(width, height);
-		layout = new SpringLayout();
+		title = t;
 		icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/" + iconPath)));
+		guiInit();
+	}
+	
+	private void guiInit() {
+		layout = new SpringLayout();
 		contentPane = getContentPane();
 		contentPane.setLayout(layout);
 		
-		InteractiveMapController listener = new InteractiveMapController();
-		windowListener = listener;
-		
+		createListener();
 		sidePanel = new SideBarView(listener, layout, contentPane);
 		mapPanel = new InteractiveMapView(listener, layout, contentPane);
 		
 		layout.putConstraint(SpringLayout.EAST, mapPanel, -5, SpringLayout.WEST, sidePanel);
 		
-		listener.addView((SideBarView)sidePanel);
-		listener.addView((InteractiveMapView)mapPanel);
-		listener.refresh();
-		addWindowListener(windowListener);
+		addListeners();
+		addPanels();
 		
-		contentPane.add(sidePanel);
-		contentPane.add(mapPanel);
-
-		setTitle("CSI Interactive Map");
+		setTitle(title);
 		setIconImage(icon.getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setPreferredSize(dim);
-		setMinimumSize(new Dimension(width, height));
-		setMaximumSize(new Dimension(width, height));
+		setMinimumSize(dim);
+		setMaximumSize(dim);
 		
 		setResizable(false);
 		setLocationRelativeTo(null);
 
 		pack();
-		setVisible(true);	
+		setVisible(true);
+	}
+	
+	private void createListener() {
+		InteractiveMapController l = new InteractiveMapController();
+		listener = l;
+	}
+	
+	private void addListeners() {
+		listener.addView((SideBarView)sidePanel);
+		listener.addView((InteractiveMapView)mapPanel);
+		listener.refresh();
+		addWindowListener(listener);
+	}
+	
+	private void addPanels() {
+		contentPane.add(sidePanel);
+		contentPane.add(mapPanel);
 	}
 }

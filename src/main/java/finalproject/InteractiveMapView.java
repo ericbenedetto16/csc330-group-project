@@ -16,21 +16,33 @@ public class InteractiveMapView extends JPanel {
 	private MouseListener mouseListener;
 	private Container contentPane;
 	private ArrayList<InteractiveMapObject> shapes = new ArrayList<InteractiveMapObject>();
+	private SpringLayout layout;
 	
-	public InteractiveMapView(InteractiveMapController listener, SpringLayout layout, Container cp) {
+	public InteractiveMapView(InteractiveMapController listener, SpringLayout l, Container cp) {
 		super();
 		mouseListener = listener;
+		layout = l;
 		contentPane = cp;
-		addMouseListener(mouseListener);
 		
+		guiInit();
+
+	}
+	
+	private void guiInit() {
 		setPreferredSize(new Dimension(Program.WINDOW_WIDTH*2/3, Program.WINDOW_HEIGHT));
 		setLayout(null);
+		
+		addListeners();
 		
 		layout.putConstraint(SpringLayout.NORTH, this, 5, SpringLayout.NORTH, contentPane);
 		layout.putConstraint(SpringLayout.WEST, this, 5, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.SOUTH, this, -5, SpringLayout.SOUTH, contentPane);
 		
 		setVisible(true);
+	}
+	
+	private void addListeners() {
+		addMouseListener(mouseListener);
 	}
 	
 	public void refresh(ArrayList<InteractiveMapObject> l) {

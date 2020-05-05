@@ -25,16 +25,35 @@ public class SideBarView extends JPanel {
 	private ActionListener actionListener;
 	private MouseListener mouseListener;
 	private ArrayList<JButton> buttons;
+	private SpringLayout layout;
+	private Container contentPane;
 	
-	public SideBarView(InteractiveMapController listener, SpringLayout layout, Container contentPane) {
+	public SideBarView(InteractiveMapController listener, SpringLayout l, Container cp) {
+		super();
 		buttons = new ArrayList<JButton>();
 		actionListener = listener;
 		mouseListener = listener;
+		layout = l;
+		contentPane = cp;
 		
+		guiInit();
+	}
+	
+	private void guiInit() {
 		setLayout(new GridLayout(4,2));
 		setDoubleBuffered(true);
 		setPreferredSize(new Dimension(Program.WINDOW_WIDTH/3, Program.WINDOW_HEIGHT));
 		
+		buttonsInit();
+		
+		layout.putConstraint(SpringLayout.NORTH, this, 0, SpringLayout.NORTH, contentPane);
+		layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, contentPane);
+		
+		setVisible(true);
+	}
+	
+	private void buttonsInit() {
 		buttons.add(new JButton(BL_MARKER));
 		buttons.add(new JButton(BL_DISTANCE));
 		buttons.add(new JButton(BL_POLYGON));
@@ -44,18 +63,15 @@ public class SideBarView extends JPanel {
 		buttons.add(new JButton(BL_CLEAR));
 		buttons.add(new JButton(BL_EXIT));
 		
+		addListeners();
+	}
+	
+	private void addListeners() {
 		for(JButton btn : buttons) {
 			btn.addActionListener(actionListener);
 			btn.addMouseListener(mouseListener);
 			add(btn);
 		}
-
-		layout.putConstraint(SpringLayout.NORTH, this, 0, SpringLayout.NORTH, contentPane);
-		layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, contentPane);
-		layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, contentPane);
-		
-		setVisible(true);
-
 	}
 
 	public void disableButtons(String button) {

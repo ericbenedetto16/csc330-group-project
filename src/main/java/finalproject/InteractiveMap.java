@@ -27,6 +27,7 @@ public class InteractiveMap {
 	public static final double maxLat = 40.59610;
 	public static final double minLat = 40.60630;
 	
+	private JSONReader r;
 	private ArrayList<InteractiveMapObject> baseShapes;
 	private ArrayList<InteractiveMapObject> userShapes;
 	
@@ -35,7 +36,7 @@ public class InteractiveMap {
 		userShapes = new ArrayList<InteractiveMapObject>();
 		
 		try {
-			JSONReader r = new JSONReader("CSI_Land.geojson");
+			r = new JSONReader("CSI_Land.geojson");
 			
 			roundUpShapes(r, true);
 			
