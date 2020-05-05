@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.simple.parser.ParseException;
 
@@ -18,24 +21,40 @@ public class InteractiveMap {
 	
 	public static final int MAP_WIDTH = 524;
 	public static final int MAP_HEIGHT = 661;
+//	public static final int MAP_WIDTH = 2 * ( Program.WINDOW_WIDTH /3) - 20, MAP_HEIGHT = Program.WINDOW_HEIGHT - (710 - 660);
 	
-	public static final double minLng = -74.15552;
-	public static final double maxLng = -74.14424;
-	public static final double maxLat = 40.59493;
-	public static final double minLat = 40.60826;
+//	public static final double minLng = -74.15552;
+//	public static final double maxLng = -74.14424;
+//	public static final double maxLat = 40.59493;
+//	public static final double minLat = 40.60826;
 	
-	private JSONReader r;
+//	public static final double minLng = -74.15215;
+//	public static final double maxLng = -74.14715;
+//	public static final double maxLat = 40.59620;
+//	public static final double minLat = 40.60600;
+	
+	public static final double minLng = -74.15420;
+	public static final double maxLng = -74.14590;
+	public static final double maxLat = 40.59610;
+	public static final double minLat = 40.60630;
+	
+	private ArrayList<InteractiveMapObject> grassShapes = new ArrayList<InteractiveMapObject>();
 	private ArrayList<InteractiveMapObject> baseShapes = new ArrayList<InteractiveMapObject>();
 	private ArrayList<InteractiveMapObject> userShapes = new ArrayList<InteractiveMapObject>();
 	
 	public InteractiveMap() throws FileNotFoundException, IOException, ParseException {
 		
 		try {
-			r = new JSONReader("CSIBuildings.geojson");
-		
-			ArrayList<ArrayList<double[]>> rawShapes = r.getShapes();
-			ArrayList<InteractiveMapObject> raw = new ArrayList<InteractiveMapObject>();
-			for(ArrayList<double[]> shape : rawShapes) {
+			JSONReader r = new JSONReader("CSI_Land.geojson");
+			
+			Map<String, ArrayList<double[]>> gShapes = r.getShapes();
+			
+			Iterator<Entry<String, ArrayList<double[]>>> itr1 = gShapes.entrySet().iterator();
+			while(itr1.hasNext()) {
+				Map.Entry<String, ArrayList<double[]>> pair = itr1.next();
+				String name = pair.getKey();
+				ArrayList<double[]> shape = pair.getValue();
+				
 				// Get Points in Shape
 				int n = shape.size();
 				// Create Array for Points
@@ -49,7 +68,43 @@ public class InteractiveMap {
 					y[i] = (int)scaleHeight(shape.get(i)[1]);
 				}
 				
-				PolygonObject o = new PolygonObject(new Polygon(x,y,n),"Random");
+				Polygon poly = new Polygon(x,y,n);
+				System.out.println(poly);
+				
+				double center[] = getCenter(poly);
+				
+				PolygonObject o = new PolygonObject(poly, true);
+				baseShapes.add(o);
+			}
+			
+			r = new JSONReader("CSI_With_Lots_2.geojson");
+			
+			Map<String, ArrayList<double[]>> rawShapes = r.getShapes();
+			
+			Iterator<Entry<String, ArrayList<double[]>>> itr = rawShapes.entrySet().iterator();
+			while(itr.hasNext()) {
+				Map.Entry<String, ArrayList<double[]>> pair = itr.next();
+				String name = pair.getKey();
+				ArrayList<double[]> shape = pair.getValue();
+				
+				// Get Points in Shape
+				int n = shape.size();
+				// Create Array for Points
+				int[] x = new int[shape.size()];
+				int[] y = new int[shape.size()];
+				
+				// For Each Point in Shape
+				for(int i = 0; i < n; i++) {
+					// Add X,Y to Shape
+					x[i] = (int)scaleWidth(shape.get(i)[0]);
+					y[i] = (int)scaleHeight(shape.get(i)[1]);
+				}
+				
+				Polygon poly = new Polygon(x,y,n);
+				
+				double center[] = getCenter(poly);
+				
+				PolygonObject o = new PolygonObject(poly,buildToolTipText(name,center[0],center[1]), new double[] {scaleHeight(center[0]), scaleWidth(center[1])}, name);
 				baseShapes.add(o);
 			}
 		}catch(Exception e) {
@@ -328,6 +383,7 @@ public class InteractiveMap {
 	
 	public ArrayList<InteractiveMapObject> getShapes() {
 		ArrayList<InteractiveMapObject> allShapes = new ArrayList<InteractiveMapObject>();
+		allShapes.addAll(grassShapes);
 		allShapes.addAll(baseShapes);
 		allShapes.addAll(userShapes);
 		return allShapes;
