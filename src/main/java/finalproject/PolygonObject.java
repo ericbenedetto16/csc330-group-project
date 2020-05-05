@@ -62,16 +62,18 @@ public class PolygonObject extends JComponent implements InteractiveMapObject{
 	// Implemented Hacky WorkAround.
 	@Override
 	public void customPaint(Graphics g) {
-		g.setColor(Color.black);
+		Color darkGreen = new Color(39, 130, 12);
+		Color lightBlue = new Color(66, 212, 245);
+		g.setColor(lightBlue);
 		if(!baseShape) g.setColor(Color.red);
-		if(grass) g.setColor(Color.green);
+		if(grass) g.setColor(darkGreen);
 		if(baseShape || grass) g.fillPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
 		g.drawPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
 		if(baseShape && !Objects.isNull(baseName)) {
 			Font fnt = new Font("arial", Font.BOLD, 10);
 			FontMetrics fm = g.getFontMetrics(fnt);
 			g.setFont(fnt);
-			g.setColor(Color.white);
+			g.setColor(Color.black);
 		    g.drawString(baseName, (int)center[1] - (fm.stringWidth(baseName)/2) , (int)center[0] + fm.getAscent() / 2);
 		}
 	}
