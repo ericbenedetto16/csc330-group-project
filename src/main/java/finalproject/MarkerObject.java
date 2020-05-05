@@ -1,7 +1,6 @@
 package finalproject;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 

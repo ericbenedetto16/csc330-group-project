@@ -2,7 +2,10 @@ package finalproject;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -16,10 +19,12 @@ public class Window extends JFrame {
 	private Container contentPane;
 	private WindowListener windowListener;
 	private Dimension dim;
+	private ImageIcon icon;
 	
-	public Window(int width, int height) {
+	public Window(int width, int height, String iconPath) {
 		dim = new Dimension(width, height);
 		layout = new SpringLayout();
+		icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/" + iconPath)));
 		contentPane = getContentPane();
 		contentPane.setLayout(layout);
 		
@@ -39,6 +44,8 @@ public class Window extends JFrame {
 		contentPane.add(sidePanel);
 		contentPane.add(mapPanel);
 
+		setTitle("CSI Interactive Map");
+		setIconImage(icon.getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setPreferredSize(dim);
 		setMinimumSize(new Dimension(width, height));

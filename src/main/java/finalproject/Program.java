@@ -5,7 +5,7 @@ public class Program {
 	public static boolean paused = false;
 	
 	public Program() {
-		new Window(WINDOW_WIDTH, WINDOW_HEIGHT);
+		new Window(WINDOW_WIDTH, WINDOW_HEIGHT, "csi logo.jpg");
 	}
 
 	public static void main(String[] args) {

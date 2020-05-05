@@ -27,18 +27,19 @@ public class InteractiveMap {
 	public static final double maxLat = 40.59610;
 	public static final double minLat = 40.60630;
 	
-	private ArrayList<InteractiveMapObject> grassShapes = new ArrayList<InteractiveMapObject>();
-	private ArrayList<InteractiveMapObject> baseShapes = new ArrayList<InteractiveMapObject>();
-	private ArrayList<InteractiveMapObject> userShapes = new ArrayList<InteractiveMapObject>();
+	private ArrayList<InteractiveMapObject> baseShapes;
+	private ArrayList<InteractiveMapObject> userShapes;
 	
 	public InteractiveMap() throws FileNotFoundException, IOException, ParseException {
+		baseShapes = new ArrayList<InteractiveMapObject>();
+		userShapes = new ArrayList<InteractiveMapObject>();
 		
 		try {
 			JSONReader r = new JSONReader("CSI_Land.geojson");
 			
 			roundUpShapes(r, true);
 			
-			r = new JSONReader("CSI_With_Lots_2.geojson");
+			r = new JSONReader("CSI_With_Lots.geojson");
 			
 			roundUpShapes(r, false);
 		}catch(Exception e) {

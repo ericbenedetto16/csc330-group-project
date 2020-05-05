@@ -1,8 +1,10 @@
 package finalproject;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,7 +27,9 @@ public class JSONReader
     
 	public JSONReader(String file) throws FileNotFoundException, IOException, ParseException {
 		try {
-		 Object obj = new JSONParser().parse(new FileReader(JSONReader.class.getClassLoader().getResource(file).getFile().replace("%20", " ")));
+		 InputStream in = getClass().getResourceAsStream("/" + file); 
+		 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		 Object obj = new JSONParser().parse(reader);
 	     
 		 jo = (JSONObject) obj; 
 		 
@@ -40,6 +44,8 @@ public class JSONReader
 	     setShapes();
 	    
 	 }catch(FileNotFoundException e) { 
+		 e.printStackTrace();
+		 System.out.println(JSONReader.class.getClassLoader().getResource(file).getFile().replace("%20", " ").replace("file:/", ""));
 		 System.out.println("File Could Not Be Found");
 	 }catch(IOException e) {
 		 System.out.println("File Could Not Be Read");
